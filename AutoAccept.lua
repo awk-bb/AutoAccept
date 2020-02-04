@@ -61,7 +61,7 @@ SlashCmdList["AA"] = function(msg)
   elseif cmd == "add" or cmd == "remove" and args ~= "" then
     for arg in args:gmatch("%S+") do
       local playerName = Capitalize(arg)
-      if not tContains(AutoAccept_Inviters, playerName)
+      if not tContains(AutoAccept_Inviters, playerName) then
         SetInviters(cmd, playerName)
       end
     end
