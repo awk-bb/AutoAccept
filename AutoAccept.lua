@@ -3,16 +3,15 @@ frame:RegisterEvent("ADDON_LOADED")
 frame:RegisterEvent("PARTY_INVITE_REQUEST")
 
 local function GetIndex(table, item)
-	for i = 1, #table do
-		if table[i] == item then
-		  print(i .. " " .. table[i])
-			return i
+  for i = 1, #table do
+    if table[i] == item then
+      return i
     end
   end
 end
 
 local function Capitalize(str)
-    return (str:gsub("^%l", string.upper))
+  return (str:gsub("^%l", string.upper))
 end
 
 local function GetInviters()
