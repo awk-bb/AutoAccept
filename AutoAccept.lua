@@ -1,6 +1,5 @@
 local frame = CreateFrame("Frame")
 frame:RegisterEvent("ADDON_LOADED")
-frame:RegisterEvent("PARTY_INVITE_REQUEST")
 
 local function GetIndex(table, item)
   for i = 1, #table do
@@ -22,7 +21,29 @@ local function GetInviters()
 end
 
 local function GetHelp()
-  print("|cffFF9700Usage: /aa [list] [add playerName] [remove playerName]")
+  print("|cffFF9700Usage: /aa [list] [on] [off] [add playerName] [remove playerName]")
+end
+
+local function GetStatus()
+  if AutoAccept_Startup == 1 then
+    print("|cffFF9700AutoAccept is ON.")
+  elseif AutoAccept_Startup == 0 then
+    print("|cffFF9700AutoAccept is OFF.")
+  end
+end
+
+local function SetStatus(cmd)
+  if cmd == "init" then
+    frame:RegisterEvent("PARTY_INVITE_REQUEST")
+    AutoAccept_Startup = 1
+  elseif cmd == "on" and AutoAccept_Startup ~= 1 then
+    frame:RegisterEvent("PARTY_INVITE_REQUEST")
+    AutoAccept_Startup = 1
+  elseif cmd == "off" and AutoAccept_Startup ~= 0 then
+    frame:UnregisterEvent("PARTY_INVITE_REQUEST")
+    AutoAccept_Startup = 0
+  end
+  GetStatus()
 end
 
 local function SetInviters(cmd, playerName)
@@ -41,7 +62,11 @@ local function EventHandler(self, event, sender)
       AutoAccept_Inviters = {}
     end
     print("|cffFF9700AutoAccept loaded.")
+    if AutoAccept_Startup == nil then
+      SetStatus("init")
+    end
     print(GetInviters())
+    GetStatus()
   elseif event == "PARTY_INVITE_REQUEST" and tContains(AutoAccept_Inviters, sender) then
     AcceptGroup()
     self:RegisterEvent("GROUP_ROSTER_UPDATE")
@@ -57,6 +82,9 @@ SlashCmdList["AA"] = function(msg)
   local _, _, cmd, args = string.find(msg, "%s?(%w+)%s?(.*)")
   if cmd == "list" then
     GetInviters()
+    GetStatus()
+  elseif cmd == "on" or cmd == "off" then
+    SetStatus(cmd)
   elseif cmd == "add" or cmd == "remove" and args ~= "" then
     for arg in args:gmatch("%S+") do
       local playerName = Capitalize(arg)

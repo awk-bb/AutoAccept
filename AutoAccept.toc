@@ -3,5 +3,6 @@
 ## Author: Awk - Bloodsail Buccaneers
 ## Version: 1.0
 ## Notes: Auto Accepts invites from a set list of players.
+## SavedVariables: AutoAccept_Startup
 ## SavedVariablesPerCharacter: AutoAccept_Inviters
 AutoAccept.lua
