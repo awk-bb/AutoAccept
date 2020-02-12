@@ -62,7 +62,7 @@ local function EventHandler(self, event, sender)
       AutoAccept_Inviters = {}
     end
     print("|cffFF9700AutoAccept loaded.")
-    if AutoAccept_Startup == nil then
+    if AutoAccept_Startup == nil or AutoAccept_Startup == 1 then
       SetStatus("init")
     end
     print(GetInviters())
