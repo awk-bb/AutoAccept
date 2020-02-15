@@ -64,9 +64,10 @@ local function EventHandler(self, event, sender)
     print("|cffFF9700AutoAccept loaded.")
     if AutoAccept_Startup == nil or AutoAccept_Startup == 1 then
       SetStatus("init")
+    else
+      GetStatus()
     end
     print(GetInviters())
-    GetStatus()
   elseif event == "PARTY_INVITE_REQUEST" and tContains(AutoAccept_Inviters, sender) then
     AcceptGroup()
     self:RegisterEvent("GROUP_ROSTER_UPDATE")
